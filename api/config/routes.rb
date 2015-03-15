@@ -7,6 +7,9 @@ Rails.application.routes.draw do
           get '/' => 'gifs#show'
         end
       end
+      scope '/users' do
+        post '/' => 'users#create'
+      end
     end
   end
 end

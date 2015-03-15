@@ -66,27 +66,71 @@ function populate_list_from_json(list) {
 
         // update view count
         chrome.storage.sync.get('views', function (result) {
-            // save action count
+            
+            console.log("currently " + result.views + " views");
+            console.log("currently " + result.user_id + " user_id");
+
+            // save view count
             chrome.storage.sync.set({'views': result.views + 1}, function (the_result) {
                 console.log("Updated view count");
 
-                if(result.views >= 10 && !result.user_token) {
+                if(result.views >= 100 && !result.user_id) {
+
                     var the_form = $.parseHTML("<form id='gif_signup'> \
 <p>Please register to continue</p>\
-<input type='text' id='email' placeholder='Your email'><br/><br/>\
-<input type='password' id='password' placeholder='A password'><br/><br/>\
-<input type='submit' id='register' value='Register'>\
+<input type='text' class='user_email' name='user[email]' id='user_email' placeholder='Your email'><br/><br/>\
+<input type='password' class='user_password' name='user[password]' id='user_password' placeholder='A password'><br/><br/>\
+<a href='#register' id='register_button'>Register</a>\
 </form>");
                     
                     $("#gif_forms").html(the_form);
                     $("#gif_forms").show();
                     $('#gif_large').hide();
-                }
-                
+                    
+                    $("#register_button").click(function() {
+                        
+                        var url = API_ENDPOINT + '/users.json?user[email]=' + $(".user_email").val() + '&user[password]=' + $(".user_password").val();
+                        
+                        var x = new XMLHttpRequest();
+                        
+                        x.open('POST', url);
+                        
+                        x.responseType = 'json';
+                        
+                        x.onload = function() {
+                            
+                            console.log(x.response);
+                            
+                            var response = x.response;
+                            
+                            if (!response || response.length === 0) {
+                                console.log('No response from User API!');
+                                return;
+                            }
+                            
+                            console.log("returning gifs...");
+                            //callback(response);
 
+
+                            chrome.storage.sync.set({'user_id': response.id}, function (the_next_result) {
+                                console.log("user set!");
+                            });
+
+                            console.log("user created!");
+
+                            $("#gif_forms").hide();
+                            $('#gif_large').show();
+
+                        };
+                        
+                        x.onerror = function() {
+                            console.log('Network error.');
+                        };
+                        x.send();
+                    });
+                }
             });
         });
-
     });
 
     $('#gif_large').attr("src", list[0].image_url_large);
@@ -102,7 +146,7 @@ $(document).ready(function() {
 <div id='gif_forms'></div>\
 <div id='gif_modal'><img id='gif_large'/></div>\
 <div id='gif_list'></div>\
-<div id='gif_actions'><a id='refresh' href='#refresh'>Refresh</a><a href='#close' id='gif_header'>X</a></div>\
+<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a><a href='#close' id='gif_header'>X</a></div>\
 </div>"
 );
     $("body").append(button);
