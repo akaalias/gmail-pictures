@@ -39,7 +39,7 @@ function populate_list_from_json(list) {
 
     for(i = 0; i < list.length; i++) {
 
-        console.log("populating: " + list[i].id);
+        //console.log("populating: " + list[i].id);
 
         var image_url_large = list[i].image_url_large;
         var id = list[i].id;
@@ -65,62 +65,52 @@ function populate_list_from_json(list) {
         
 
         // update view count
-        chrome.storage.sync.get('views', function (result) {
+        chrome.storage.sync.get(['views', 'user_id'], function (result) {
             
             console.log("currently " + result.views + " views");
             console.log("currently " + result.user_id + " user_id");
 
             // save view count
             chrome.storage.sync.set({'views': result.views + 1}, function (the_result) {
-                console.log("Updated view count");
 
-                if(result.views >= 100 && !result.user_id) {
+                console.log("Updating views");
+
+                if(result.views >= 1 && !result.user_id) {
 
                     var the_form = $.parseHTML("<form id='gif_signup'> \
-<p>Please register to continue</p>\
-<input type='text' class='user_email' name='user[email]' id='user_email' placeholder='Your email'><br/><br/>\
-<input type='password' class='user_password' name='user[password]' id='user_password' placeholder='A password'><br/><br/>\
-<a href='#register' id='register_button'>Register</a>\
+Please sign up to continue\
+<input type='text' class='user_email' name='user[email]' id='user_email' placeholder='Your email'><br/>\
+<input type='password' class='user_password' name='user[password]' id='user_password' placeholder='A password'><br/>\
+<a href='#register' id='register_button'>Sign me up!</a>\
 </form>");
                     
                     $("#gif_forms").html(the_form);
                     $("#gif_forms").show();
                     $('#gif_large').hide();
                     
+                    /* allow for call*/
                     $("#register_button").click(function() {
                         
                         var url = API_ENDPOINT + '/users.json?user[email]=' + $(".user_email").val() + '&user[password]=' + $(".user_password").val();
                         
                         var x = new XMLHttpRequest();
-                        
                         x.open('POST', url);
-                        
                         x.responseType = 'json';
-                        
+
                         x.onload = function() {
-                            
                             console.log(x.response);
-                            
                             var response = x.response;
-                            
                             if (!response || response.length === 0) {
                                 console.log('No response from User API!');
                                 return;
                             }
                             
-                            console.log("returning gifs...");
-                            //callback(response);
-
-
                             chrome.storage.sync.set({'user_id': response.id}, function (the_next_result) {
-                                console.log("user set!");
                             });
-
-                            console.log("user created!");
-
+                            
                             $("#gif_forms").hide();
                             $('#gif_large').show();
-
+                            
                         };
                         
                         x.onerror = function() {
@@ -139,14 +129,16 @@ function populate_list_from_json(list) {
 
 $(document).ready(function() {
 
-    var button = $.parseHTML("<div id='gif_button'></div>");
+    var button = $.parseHTML("<div id='gif_button'><img src='" + chrome.extension.getURL('/button.png') + "'></div>");
     var container = $.parseHTML("\
 <div id='gif_container'> \
 <div id='gif_loading'><img src='" + chrome.extension.getURL('/spinner.gif') + "'></div>\
+<div id='gif_close'><a href='#close' id='gif_header'>&times;</a></div>\
 <div id='gif_forms'></div>\
 <div id='gif_modal'><img id='gif_large'/></div>\
+<div id='gif_instructions'>Click and drag me on an email &rarr;</div>\
 <div id='gif_list'></div>\
-<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a><a href='#close' id='gif_header'>X</a></div>\
+<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a><a href='#logout' id='logout'>Logout</a></div>\
 </div>"
 );
     $("body").append(button);
@@ -177,10 +169,17 @@ $(document).ready(function() {
         });
         
     });
+
+    $("#logout").click(function() {
+        chrome.storage.sync.set({'views': null, 'user_id': null}, function (the_result) {
+            console.log('Logged out!');
+        });
+    });
                         
     var user_token = "";
 
     // check if we should require sign up
+    /*
     chrome.storage.sync.get('views', function (result) {
 
         if(!result.views || result.views <= 0) {
@@ -190,9 +189,11 @@ $(document).ready(function() {
         } else {
             console.log('Current viewcount: ' + result.views);
         }
-
-
     });
+    */
 
+
+    
+    
     console.log("Finished content.js")
 });

@@ -20,5 +20,6 @@
         "storage"
         
     ],
-    "web_accessible_resources": ["spinner.gif"]
+
+    "web_accessible_resources": ["spinner.gif", "button.png"]
 }
