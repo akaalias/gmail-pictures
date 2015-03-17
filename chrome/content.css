@@ -28,14 +28,15 @@
 }
 
 #gif_list {
-
+    padding: 0px !important; 
+    margin: 0px !important;
 }
 
 #gif_list img {
     width: 50px;
     padding: 0px !important; 
     margin: 0px !important;
-    
+    cursor: pointer;
 }
 
 #gif_modal {
@@ -46,6 +47,7 @@
 
 #gif_large {
     width: 100%;
+    cursor: move;
 }
 
 #gif_loading {
@@ -65,7 +67,7 @@
 #gif_close a {
     color: white;
     font-family: 'helvetica';
-    font-size: 0.8em;
+    font-size: 12px;
     text-decoration: none;
 }
 
@@ -80,7 +82,7 @@
 #gif_actions a {
     color: black;
     text-decoration: none;
-    font-size: 0.8em;
+    font-size: 12px;
     font-family: Helvetica;
 }
 

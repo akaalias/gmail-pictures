@@ -1,12 +1,15 @@
 {
     "manifest_version": 2,
 
-    "name": "Getting started example",
-    "description": "This extension shows a Google Image search result for the current page",
+    "name": "Gmail Gif Exchange",
+    "description": "This extension lets you easily add great Gifs to your emails ",
     "version": "1.0",
+    "icons": { "16": "icon16.png",
+               "48": "icon48.png",
+               "128": "icon128.png" },
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*"],
+            "matches": ["http://*/*", "https://mail.google.com/*"],
             "css": ["content.css"],
             "js": ["jquery.js", "content.js"],
             "run_at": "document_end"
@@ -17,9 +20,9 @@
         "https://ajax.googleapis.com/",
         "http://localhost:3000/",
         "http://localhost/",
+        "https://gmail-pictures-api.herokuapp.com/",
         "storage"
         
     ],
-
     "web_accessible_resources": ["spinner.gif", "button.png"]
 }
