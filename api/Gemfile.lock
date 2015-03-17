@@ -120,6 +120,7 @@ GEM
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
       mime-types
+    pg (0.18.1)
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -233,6 +234,7 @@ DEPENDENCIES
   jquery-rails
   launchy (~> 2.4.2)
   paperclip
+  pg
   rails (= 4.2.1.rc4)
   rspec-rails (~> 3.1.0)
   sass-rails (~> 5.0)

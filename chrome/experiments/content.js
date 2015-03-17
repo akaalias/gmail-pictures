@@ -1,4 +1,4 @@
-var API_ENDPOINT = 'http://localhost:3000/api/v1'
+var API_ENDPOINT = 'https://gmail-pictures-api.herokuapp.com/api/v1'
 
 function getGifs(query, limit, callback, errorCallback) {
 
