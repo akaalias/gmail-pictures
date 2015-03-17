@@ -97,8 +97,9 @@ Please sign up to continue\
                         x.responseType = 'json';
 
                         x.onload = function() {
-                            console.log(x.response);
+                            // console.log(x.response);
                             var response = x.response;
+
                             if (!response || response.length === 0) {
                                 console.log('No response from User API!');
                                 return;
@@ -117,7 +118,7 @@ Please sign up to continue\
                         };
                         x.send();
                     });
-                }
+                } 
             });
         });
     });

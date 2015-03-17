@@ -70,7 +70,7 @@
     background-color: white;
     position: fixed;
     bottom: 0px;
-    width: 250px;
+    padding: 5px;
 }
 
 #gif_actions a {
