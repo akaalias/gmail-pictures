@@ -74,7 +74,7 @@ function populate_list_from_json(list) {
 
                 console.log("Updating views");
 
-                if(result.views >= 1 && !result.user_id) {
+                if(result.views >= 20 && !result.user_id) {
 
                     var the_form = $.parseHTML("<form id='gif_signup'> \
 Please sign up to continue\
@@ -138,7 +138,7 @@ $(document).ready(function() {
 <div id='gif_modal'><img id='gif_large'/></div>\
 <div id='gif_instructions'>Click and drag me on an email &rarr;</div>\
 <div id='gif_list'></div>\
-<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a><a href='#logout' id='logout'>Logout</a></div>\
+<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a> <a href='#logout' id='logout'>Logout</a></div>\
 </div>"
 );
     $("body").append(button);
