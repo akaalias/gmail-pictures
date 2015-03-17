@@ -49,7 +49,6 @@ function populate_list_from_json(list) {
     }
 
 
-
     $(".gif_small").click(function() {  
         console.log("clicked: " + $(this).attr("id"));
         $('#gif_loading').show();
@@ -176,24 +175,5 @@ $(document).ready(function() {
         });
     });
                         
-    var user_token = "";
-
-    // check if we should require sign up
-    /*
-    chrome.storage.sync.get('views', function (result) {
-
-        if(!result.views || result.views <= 0) {
-            chrome.storage.sync.set({'views': 1}, function (the_result) {
-                console.log('Initial viewcount set!');
-            });
-        } else {
-            console.log('Current viewcount: ' + result.views);
-        }
-    });
-    */
-
-
-    
-    
     console.log("Finished content.js")
 });
