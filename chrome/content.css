@@ -92,11 +92,12 @@
     width: 98%;
 }
 
-#gif_container form {
+#gif_container form, #gif_container #gif_share {
     padding: 15px;
+    padding-bottom: 20px;
 }
 
-#register_button {
+#register_button, #gif_share_button{
     padding: 5px; 
     background-color: red;
     color: white;

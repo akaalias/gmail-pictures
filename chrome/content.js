@@ -1,5 +1,6 @@
 var API_ENDPOINT = 'https://gmail-pictures-api.herokuapp.com/api/v1'
 
+
 function getGifs(query, limit, callback, errorCallback) {
 
     console.log("Getting gifs...");
@@ -118,7 +119,27 @@ Please sign up to continue\
                         };
                         x.send();
                     });
-                } 
+                } else if ((result.views % 20) == 0) {
+
+                    var the_form = $.parseHTML("<div id='gif_share'><b>Get Gifs sent to you  from your friends today!</b><br/><br/> Be a hero and spread the word for Gif Exchange. <br/><br/>You are awesome, thank you.<br/><br/>\
+<a target='_blank' href='\
+http://www.facebook.com/sharer/sharer.php?u=" +
+                                            encodeURIComponent("https://chrome.google.com/webstore/detail/gmail-gif-exchange/pobileihpnkigmkjmmbiminofmcfdiee?hl=en")
++ "' id='gif_share_button'>\
+Share on Facebook!</a>\
+</div>");
+                    
+                    $("#gif_forms").html(the_form);
+                    $("#gif_forms").show();
+                    $('#gif_large').hide();
+
+                    $("#gif_share_button").click(function() {
+                        console.log("clicked facebook...");
+                        $("#gif_forms").hide();
+                        $('#gif_large').show();
+                    });
+
+                }
             });
         });
     });
@@ -138,9 +159,10 @@ $(document).ready(function() {
 <div id='gif_modal'><img id='gif_large'/></div>\
 <div id='gif_instructions'>Click and drag me on an email &rarr;</div>\
 <div id='gif_list'></div>\
-<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a><!--<a href='#logout' id='logout'>Logout</a>--></div>\
+<div id='gif_actions'><a id='refresh' href='#refresh_me'>Refresh</a><!-- <a href='#logout' id='logout'>Logout</a> --></div>\
 </div>"
 );
+
     $("body").append(button);
     $("body").append(container);
     
@@ -177,6 +199,7 @@ $(document).ready(function() {
     });
 
 
+
     chrome.storage.sync.get('views', function (result) {
         if(!result.views || result.views <= 0) {
             chrome.storage.sync.set({'views': 1}, function (the_result) {
@@ -189,3 +212,4 @@ $(document).ready(function() {
                         
     console.log("Finished content.js")
 });
+
