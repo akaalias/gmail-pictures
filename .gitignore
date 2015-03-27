@@ -1,1 +1,12 @@
 /api/public/system
+/api/.bundle
+
+# Ignore the default SQLite database.
+/api/db/*.sqlite3
+/api/db/*.sqlite3-journal
+
+# Ignore all logfiles and tempfiles.
+/api/log/*
+!/log/.keep
+/api/tmp
+/api/config/secrets.yml
