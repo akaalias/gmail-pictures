@@ -9,4 +9,3 @@
 /api/log/*
 !/log/.keep
 /api/tmp
-/api/config/secrets.yml
