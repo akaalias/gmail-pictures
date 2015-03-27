@@ -3,7 +3,7 @@
 
     "name": "Gmail Gif Exchange",
     "description": "This extension lets you easily add great Gifs to your emails ",
-    "version": "1.0",
+    "version": "1.1",
     "icons": { "16": "icon16.png",
                "48": "icon48.png",
                "128": "icon128.png" },
